@@ -1,55 +1,114 @@
-import Lottie from "lottie-react";
 import React from "react";
-import resiteanim from "./../../assets/Animation - 1740010453167.json";
+import { useForm } from "react-hook-form";
+import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
+import resiteanim from "./../../assets/Animation - 1740010453167.json";
 
 const Registration = () => {
-    return (
-        <>
-        <div className="text-center py-10">
-          <h1 className="text-5xl font-bold">Registration now!</h1>
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  return (
+    <>
+      <div className="text-center py-10">
+        <h1 className="text-5xl font-bold">Register Now!</h1>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center px-6 lg:px-20">
+        <div>
+          <Lottie animationData={resiteanim} />
         </div>
-        <div className="grid grid-cols-2 ">
-          <div className="items-center justify-center ">
-            <Lottie animationData={resiteanim}></Lottie>
-          </div>
-          <div>
-            <div className="lg:p-10 bg-base-200 min-h-screen rounded-3xl">
-              <div className=" flex-col lg:flex-row-reverse mt-20">
-                <div className="card bg-base-100 w-full   shadow-2xl">
-                  <div className="card-body">
-                    <fieldset className="fieldset">
-                    <label className="fieldset-label">Name</label>
-                    <input type="email" className="input w-full" placeholder="name" />
-
-
-                    <label className="fieldset-label">age</label>
-                      <input type="email" className="input w-full" placeholder="age " />
-
-                      <label className="fieldset-label">Email</label>
-                      <input type="email" className="input w-full" placeholder="Email" />
-                      <label className="fieldset-label">Password</label>
-                      <input
-                        type="password"
-                        className="input w-full"
-                        placeholder="Password"
-                      />
-                      {/* <div className="text-center">
-                        <a className="link link-hover ">Forgot password?</a>
-                      </div> */}
-                      <button className="btn btn-neutral mt-4">Login</button>
-                    </fieldset>
-                    <div>
-                        <Link className="">already have and account? log in with google</Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div className="bg-base-200 p-10 rounded-3xl shadow-lg">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <label className="block text-lg font-semibold">Name</label>
+              <input
+                {...register("name", { required: "Name is required" })}
+                type="text"
+                className="input w-full"
+                placeholder="Enter your name"
+              />
+              {errors.name && <p className="text-red-500">{errors.name.message}</p>}
             </div>
+
+            <div>
+              <label className="block text-lg font-semibold">Age</label>
+              <input
+                {...register("age", { required: "Age is required" })}
+                type="number"
+                className="input w-full"
+                placeholder="Enter your age"
+              />
+              {errors.age && <p className="text-red-500">{errors.age.message}</p>}
+            </div>
+
+            <div>
+              <label className="block text-lg font-semibold">Email</label>
+              <input
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Enter a valid email",
+                  },
+                })}
+                type="email"
+                className="input w-full"
+                placeholder="Enter your email"
+              />
+              {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+            </div>
+
+            <div>
+              <label className="block text-lg font-semibold">Password</label>
+              <input
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
+                type="password"
+                className="input w-full"
+                placeholder="Enter your password"
+              />
+              {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+            </div>
+
+            <div>
+              <label className="block text-lg font-semibold">Your  Type</label>
+              <select
+                {...register("userType", { required: "Please select a user type" })}
+                className="input w-full"
+              >
+                <option value="">Select an option</option>
+                <option value="student">Education</option>
+                <option value="company">Company Use</option>
+                <option value="group">Group</option>
+              </select>
+              {errors.userType && <p className="text-red-500">{errors.userType.message}</p>}
+            </div>
+
+            <button type="submit" className="btn btn-neutral w-full mt-4">
+              Register
+            </button>
+          </form>
+          <div className="mt-4 text-center">
+            <Link className="text-blue-600 hover:underline" to="/login">
+              Already have an account? Log in with Google
+            </Link>
           </div>
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 };
 
 export default Registration;
