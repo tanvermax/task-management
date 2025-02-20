@@ -6,7 +6,7 @@ const Navber = () => {
     <div>
       <div className="navbar w-11/12 mx-auto">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">ToDoTask</a>
+          <Link to={"/"} className="btn btn-ghost text-xl">ToDoTask</Link>
         </div>
         <div className="flex gap-2">
           <div className="form-control">
