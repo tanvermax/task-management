@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
 import resiteanim from "./../../assets/Animation - 1740010453167.json";
+import UserAuth from "../../Provider/UserAuth";
+import { AuthContext } from "../../Provider/Authprovider";
 
 const Registration = () => {
+  const {handlenewuser}= useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -13,6 +16,14 @@ const Registration = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+
+   handlenewuser(data.email,data.password)
+   .then(result=>{
+    alert("suceess",result.user)
+   })
+   .catch(error=>{
+    alert("error",error.message)
+   })
   };
 
   return (
@@ -22,7 +33,7 @@ const Registration = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center px-6 lg:px-20">
         <div>
-          <Lottie animationData={resiteanim} />
+          <Lottie animationData={resiteanim} className="h-48" />
         </div>
         <div className="bg-base-200 p-10 rounded-3xl shadow-lg">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

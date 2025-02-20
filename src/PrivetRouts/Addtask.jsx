@@ -14,6 +14,7 @@ const Addtask = () => {
     console.log("Task Data:", data);
     reset(); // Clear form after submission
   };
+  
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg p-6 rounded-xl">
       <h2 className="text-2xl font-semibold text-center mb-4">Add New Task</h2>

@@ -1,12 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import UserAuth from "../../Provider/UserAuth";
 
 const Navber = () => {
+  const { user,handlelogout } = UserAuth();
+ 
   return (
     <div>
       <div className="navbar w-11/12 mx-auto">
         <div className="flex-1">
-          <Link to={"/"} className="btn btn-ghost text-xl">ToDoTask</Link>
+          <Link to={"/"} className="btn btn-ghost text-xl">
+            ToDoTask
+          </Link>
         </div>
         <div className="flex gap-2">
           <div className="form-control">
@@ -15,11 +20,32 @@ const Navber = () => {
               placeholder="Search"
               className="input input-bordered w-24 md:w-auto"
             />
-            <Link to={'login'} className="btn">log in</Link>
-            <Link to={'registrstion'} className="btn">Registrstion</Link>
+            <div>
+              {user ? (
+                <>
+                  <p className="btn"> user.email</p>
+                  <button onClick={handlelogout} className="btn">
+                    logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to={"login"} className="btn">
+                    log in
+                  </Link>
+                  <Link to={"registrstion"} className="btn">
+                    Registrstion
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
