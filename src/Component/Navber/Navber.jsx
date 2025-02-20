@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import UserAuth from "../../Provider/UserAuth";
 
 const Navber = () => {
-  const { user,handlelogout } = UserAuth();
- 
+  const { user, handlelogout } = UserAuth();
+
   return (
     <div>
       <div className="navbar w-11/12 mx-auto">
@@ -15,15 +15,15 @@ const Navber = () => {
         </div>
         <div className="flex gap-2">
           <div className="form-control">
-            <input
+            {/* <input
               type="text"
               placeholder="Search"
               className="input input-bordered w-24 md:w-auto"
-            />
+            /> */}
             <div>
               {user ? (
                 <>
-                  <p className="btn"> user.email</p>
+                  <p className="btn">{user.email}</p>
                   <button onClick={handlelogout} className="btn">
                     logout
                   </button>

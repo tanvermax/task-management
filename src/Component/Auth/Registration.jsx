@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import Lottie from "lottie-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import resiteanim from "./../../assets/Animation - 1740010453167.json";
 import UserAuth from "../../Provider/UserAuth";
 import { AuthContext } from "../../Provider/Authprovider";
 
 const Registration = () => {
+  const navigate= useNavigate();
   const {handlenewuser}= useContext(AuthContext);
   const {
     register,
@@ -19,7 +20,9 @@ const Registration = () => {
 
    handlenewuser(data.email,data.password)
    .then(result=>{
-    alert("suceess",result.user)
+    alert("suceess",result.user);
+    navigate("/")
+
    })
    .catch(error=>{
     alert("error",error.message)

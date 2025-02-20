@@ -25,11 +25,11 @@ const Authprovider = ({ children }) => {
     setUser(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-//   logout
-const handlelogout=()=>{
+  //   logout
+  const handlelogout = () => {
     setloading(true);
     return signOut(auth);
-}
+  };
   // middlware
   useEffect(() => {
     const unsubscriber = onAuthStateChanged(auth, (currentuser) => {
@@ -46,7 +46,7 @@ const handlelogout=()=>{
     };
   });
 
-  const authinfo = { handlenewuser, loginuser,user,handlelogout };
+  const authinfo = { handlenewuser, loginuser, user, handlelogout };
 
   return (
     <AuthContext.Provider value={authinfo}>{children}</AuthContext.Provider>

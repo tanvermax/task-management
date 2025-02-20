@@ -3,9 +3,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import resiteanim from "./../../assets/Animation - 1740007365645.json";
 import UserAuth from "../../Provider/UserAuth";
+import { useNavigate } from "react-router-dom";
 
 const Log = () => {
   const { loginuser } = UserAuth();
+  const navigate= useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,7 +20,8 @@ const Log = () => {
     loginuser(data.email,data.password)
     .then(result=>{
 
-      alert("hello user", result.user)
+      alert("hello user", result.user);
+      navigate("/")
     })
     .catch(error=>{
       alert("error",error.message)

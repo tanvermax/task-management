@@ -17,10 +17,11 @@ export const routs = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
         errorElement: <h2>erro there is no page</h2>,
-        children: [{
-          path:"/",
-          element:<Inbox></Inbox>
-        },
+        children: [
+          {
+            path: "/",
+            element: <Inbox></Inbox>,
+          },
           {
             path: "/addtask",
             element: <Addtask></Addtask>,
@@ -34,13 +35,13 @@ export const routs = createBrowserRouter([
         ],
       },
       {
-        path:"/login",
-        element:<Log></Log>
+        path: "/login",
+        element: <Log></Log>,
       },
       {
-        path:"/registrstion",
-        element:<Registration></Registration>
-      }
+        path: "/registrstion",
+        element: <Registration></Registration>,
+      },
     ],
   },
 ]);
