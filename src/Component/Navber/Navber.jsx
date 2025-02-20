@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navber = () => {
   return (
@@ -14,13 +15,11 @@ const Navber = () => {
               placeholder="Search"
               className="input input-bordered w-24 md:w-auto"
             />
+            <Link to={'login'} className="btn">log in</Link>
+            <Link to={'registrstion'} className="btn">Registrstion</Link>
           </div>
           <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
