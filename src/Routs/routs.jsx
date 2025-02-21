@@ -6,6 +6,7 @@ import TaskList from "../PrivetRouts/TaskList";
 import Log from "../Component/Auth/Log";
 import Registration from "../Component/Auth/Registration";
 import Inbox from "../Component/Home/Inbox";
+import PrivetRouts from "./PrivetRouts";
 
 export const routs = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ export const routs = createBrowserRouter([
           },
           {
             path: "/addtask",
-            element: <Addtask></Addtask>,
+            element: <PrivetRouts><Addtask></Addtask></PrivetRouts>,
             errorElement: <h2>erro there is no page</h2>,
           },
           {
