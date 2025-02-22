@@ -6,7 +6,7 @@ import "../../App.css";
 import UserAuth from "../../Provider/UserAuth";
 import { io } from "socket.io-client";
 
-const socket = io("https://task-management-b4adc.web.app/");
+const socket = io("https://task-managment-server-jilq.onrender.com/");
 
 
 
