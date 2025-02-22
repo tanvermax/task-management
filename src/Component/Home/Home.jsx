@@ -6,18 +6,18 @@ const Home = () => {
   return (
     <div className="w-11/12 mx-auto grid grid-cols-12  gap-2 min-h-screen">
       <div className="col-span-2 border rounded-2xl">
-        <ul className=" p-5 leading-7">
-          <Link to={"addtask"} className="flex items-center gap-2 lg:text-xl">
+        <ul className=" lg:p-5 lg:leading-7 py-5">
+          <Link to={"addtask"} className=" btn flex items-center gap-2 lg:text-xl text-[8px]">
             <CiCirclePlus />
             Add task
           </Link>
-          <Link to={"tasklist"} className="flex items-center gap-2 lg:text-xl">
+          {/* <Link to={"tasklist"} className="flex items-center gap-2 lg:text-xl">
             <CiCirclePlus />
             Task List
-          </Link>
+          </Link> */}
         </ul>
       </div>
-      <div className="col-span-10 border p-5 rounded-2xl">
+      <div className="col-span-10 border lg:p-5 rounded-2xl">
         <Outlet></Outlet>
       </div>
     </div>

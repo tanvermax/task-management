@@ -4,56 +4,41 @@ import Dragitem from "./Dragitem";
 import { useDrop } from "react-dnd";
 import "../../App.css";
 import UserAuth from "../../Provider/UserAuth";
-import { io } from "socket.io-client";
-
-const socket = io("wss://task-managment-server-jilq.onrender.com/");
-
-
-
+import { useSocket } from "./SocketProvider";
 
 const Inbox = () => {
   const { user } = UserAuth();
+  const socket = useSocket();
   const [tasks, setTasks] = useState([]);
-  const [board, setBoard] = useState([]);
 
   useEffect(() => {
-    // Ensure user is defined before fetching tasks
     if (user && user.email) {
-      fetch(`https://task-managment-server-jilq.onrender.com/addedtask`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-
-          setTasks(data);
-          setBoard(data);
-        })
-        .catch((error) => console.error("Error fetching tasks:", error));
+      fetchTasks();
     }
 
-    socket.on("taskUpdated", (updatedtask) => {
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task._id === updatedtask._id ? updatedtask : task
-        )
-      );
-    });
+    if (socket) {
+      socket.on("taskUpdated", () => {
+        console.log("📡 Task updated via Socket.IO");
+        fetchTasks();
+      });
 
-    return () => {
-      socket.off("taskUpdated");
-    };
-  }, [user]);
+      return () => {
+        socket.off("taskUpdated");
+      };
+    }
+  }, [user, socket]);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "task",
-    drop: (task) => movetoinprogress(task._id),
+    drop: (task) => moveTo("in-progress", task._id),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
 
-  const [{ isOver: isovertodo }, droptodo] = useDrop(() => ({
+  const [{ isOver: isOverTodo }, dropTodo] = useDrop(() => ({
     accept: "task",
-    drop: (task) => movetodo(task._id),
+    drop: (task) => moveTo("todo", task._id),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -61,117 +46,74 @@ const Inbox = () => {
 
   const [{ isOver: isOverDone }, dropDone] = useDrop(() => ({
     accept: "task",
-    drop: (task) => movetoDone(task._id),
+    drop: (task) => moveTo("done", task._id),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
 
-  const movetoinprogress = async (id) => {
-    console.log(`Moving task ${id} to In Progress`);
-    await updateTaskStatus(id, "in-progress");
-  };
-  
-  const movetodo = async (id) => {
-    console.log(`Moving task ${id} to To-Do`);
-    await updateTaskStatus(id, "todo");
-  };
-  
-  const movetoDone = async (id) => {
-    console.log(`Moving task ${id} to Done`);
-    await updateTaskStatus(id, "done");
-  };
-  
-
-  const updateTaskStatus = async (id, status) => {
-    const selectedtask = tasks.find((task) => task._id === id);
-
-    const updatedtask = tasks.find((task) => task._id === id);
-    if (!updatedtask) return;
-
-    updatedtask.status = status;
-    socket.emit("updateTask", updatedtask);
-
-    console.log("Moving Task to In Progress:", selectedtask);
-
-    setBoard((prevBoard) =>
-      prevBoard.map((task) => (task._id === id ? { ...task, status } : task))
-    );
-
+  const fetchTasks = async () => {
     try {
-      const res = await fetch(
-        `https://task-managment-server-jilq.onrender.com/addedtask/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status }),
-        }
-      );
+      console.log("📥 Fetching tasks...");
+      const res = await fetch("https://task-managment-server-jilq.onrender.com/addedtask");
+      const data = await res.json();
+      console.log("✅ Fetched tasks:", data);
+      setTasks(data);
+    } catch (error) {
+      console.error("❌ Error fetching tasks:", error);
+    }
+  };
+
+  const moveTo = async (status, id) => {
+    console.log(`🔄 Moving task ${id} to ${status}`);
+    try {
+      const res = await fetch(`https://task-managment-server-jilq.onrender.com/addedtask/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
 
       const data = await res.json();
+      console.log("✅ Server Response:", data);
 
-      console.log(`Updated Task (${status}):`, data);
-
-      if (data.success) {
-        setTasks((prevTasks) =>
-          prevTasks.map((task) =>
-            task._id === id ? { ...task, status } : task
-          )
-        );
+      if (data.modifiedCount > 0) {
+        console.log("✅ Task updated successfully");
+        socket.emit("updateTask", { _id: id, status });
+        fetchTasks();
+      } else {
+        console.error("❌ Error: No modifications made");
       }
     } catch (err) {
-      console.error(`Error updating task to ${status}:`, err);
+      console.error("❌ Error updating task:", err);
     }
   };
 
   return (
     <>
-      <h2 className="text-3xl font-semibold mb-4">📥 Inbox </h2>
+      <h2 className="lg:text-3xl text-[8px] font-semibold mb-4">📥 Inbox </h2>
       <div className="grid grid-cols-3 gap-1">
-        <div
-          ref={droptodo}
-          className=" rounded-xl border  overflow-scroll mx-auto"
-        >
+        <div ref={dropTodo} className="rounded-xl lg:text-base  text-[8px] border overflow-scroll mx-auto">
           <h1>To-Do</h1>
-          <div className=" grid grid-cols-1 gap-5 ">
+          <div className="grid grid-cols-1 lg:gap-5">
             {tasks
-              .filter(
-                (task) =>
-                  task.status === "todo" && task.userEmail === user.email
-              )
-              .map((task) => (
-                <Dragitem key={task._id} task={task} />
-              ))}
+              .filter((task) => task.status === "todo" && task.userEmail === user.email)
+              .map((task) => <Dragitem key={task._id} task={task} />)}
           </div>
         </div>
-        {/* <Complete/> */}
 
         <div className="Board" ref={drop}>
-          <h1>In Progress</h1>
-
-          {board
-            .filter(
-              (task) =>
-                task.status === "in-progress" && task.userEmail === user.email
-            )
-            .map((task) => {
-              return <Dragitem key={task._id} task={task} />;
-            })}
+          <h1 className="lg:text-base text-[8px]">In Progress</h1>
+          {tasks
+            .filter((task) => task.status === "in-progress" && task.userEmail === user.email)
+            .map((task) => <Dragitem key={task._id} task={task} />)}
         </div>
 
         <div className="Board" ref={dropDone}>
-          <h1>completed</h1>
+          <h1 className="lg:text-base text-[8px]">Completed</h1>
           <div className={`grid gap-3 ${isOverDone ? "bg-green-200" : ""}`}>
-            {board
-              .filter(
-                (task) =>
-                  task.status === "done" && task.userEmail === user.email
-              )
-              .map((task) => {
-                return <Dragitem key={task._id} task={task} />;
-              })}
+            {tasks
+              .filter((task) => task.status === "done" && task.userEmail === user.email)
+              .map((task) => <Dragitem key={task._id} task={task} />)}
           </div>
         </div>
       </div>

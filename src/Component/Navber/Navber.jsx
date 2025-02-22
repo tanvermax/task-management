@@ -1,15 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { data, Link } from "react-router-dom";
 import UserAuth from "../../Provider/UserAuth";
 
 const Navber = () => {
   const { user, handlelogout } = UserAuth();
+  console.log(user);
+
+  const [loguser, setloguser]= useState([]);
+
+  useEffect(()=>{
+    fetch("https://task-managment-server-jilq.onrender.com/user")
+    .then(res=>res.json())
+    .then(data=>setloguser(data)
+    )
+  },[])
+
+ 
+  
+ const loggedInUser = loguser.filter((userData) => userData.email === user?.email);
+  
+
+ console.log(loggedInUser);
+ 
 
   return (
     <div>
-      <div className="navbar w-11/12 mx-auto">
+      <div className="navbar lg:w-11/12 mx-auto">
         <div className="flex-1">
-          <Link to={"/"} className="btn btn-ghost text-xl">
+          <Link to={"/"} className="btn btn-ghost lg:text-xl text-[8px]">
             ToDoTask
           </Link>
         </div>
@@ -23,17 +41,17 @@ const Navber = () => {
             <div>
               {user ? (
                 <>
-                  <p className="btn">{user.displayName}</p>
-                  <button onClick={handlelogout} className="btn">
+                  <p className="btn lg:text-base text-[8px]">{user.email }</p>
+                  <button onClick={handlelogout} className="btn lg:text-base text-[8px]">
                     logout
                   </button>
                 </>
               ) : (
                 <>
-                  <Link to={"login"} className="btn">
+                  <Link to={"login"} className="btn lg:text-base text-[8px]">
                     log in
                   </Link>
-                  <Link to={"registrstion"} className="btn">
+                  <Link to={"registrstion"} className="btn lg:text-base text-[8px]">
                     Registrstion
                   </Link>
                 </>
