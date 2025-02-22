@@ -11,7 +11,7 @@ const Edittask = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://task-managment-server-jilq.onrender.com/${id}`) // Adjust URL based on your backend
+    fetch(`https://task-managment-server-jilq.onrender.com/edittask/${id}`) // Adjust URL based on your backend
       .then((res) => res.json())
       .then((data) => setTask(data))
       .catch((err) => console.error("Error fetching task:", err));

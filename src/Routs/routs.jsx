@@ -43,7 +43,7 @@ export const routs = createBrowserRouter([
             loader: ({ params }) => {
               console.log("task id :=",params.id);
 
-              fetch(`https://task-managment-server-jilq.onrender.com/${params.id}`);
+              fetch(`https://task-managment-server-jilq.onrender.com/edittask/${params.id}`);
             },
             errorElement: <h2>erro there is no page</h2>,
           },

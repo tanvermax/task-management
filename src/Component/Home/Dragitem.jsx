@@ -13,6 +13,15 @@ const Dragitem = ({ task }) => {
     }),
   }));
 
+  const handledelete = (id) => {
+    console.log(id);
+    fetch(`https://task-managment-server-jilq.onrender.com/task/${id}`,{
+      method:"DELETE"
+    })
+      .then((res) => res.json())
+      .then((data) => console.log('Task deleted successfully',data));
+  };
+
   return (
     <>
       <div
@@ -58,14 +67,13 @@ const Dragitem = ({ task }) => {
           >
             {task.status}
           </button>
-         
-            <Link className="btn" to={`/edittask/${task._id}`}>
-              <CiEdit />
-            </Link>
-            <button className="btn">
-              <MdAutoDelete />
-            </button>
-      
+
+          <Link className="btn" to={`/edittask/${task._id}`}>
+            <CiEdit />
+          </Link>
+          <button onClick={() => handledelete(task._id)} className="btn">
+            <MdAutoDelete />
+          </button>
         </div>
       </div>
     </>

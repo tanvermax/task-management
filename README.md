@@ -18,7 +18,7 @@ Real-time updates ensure tasks remain in their last known order after a refresh 
 Deleted tasks are permanently removed from the database.
 Frontend UI:
 
-Built with Vite.js and React.
+### Built with Vite.js and React.
 Utilizes a drag-and-drop library (e.g., react-beautiful-dnd) for task management.
 Modern, clean, and responsive design with a maximum of four colors.
 Responsiveness: Smooth operation on both desktop and mobile devices, ensuring a mobile-friendly drag-and-drop experience.
