@@ -23,7 +23,7 @@ const Navber = () => {
             <div>
               {user ? (
                 <>
-                  <p className="btn">{user.email}</p>
+                  <p className="btn">{user.displayName}</p>
                   <button onClick={handlelogout} className="btn">
                     logout
                   </button>

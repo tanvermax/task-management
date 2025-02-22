@@ -7,8 +7,9 @@ import UserAuth from "../../Provider/UserAuth";
 import { AuthContext } from "../../Provider/Authprovider";
 
 const Registration = () => {
-  const navigate= useNavigate();
-  const {handlenewuser}= useContext(AuthContext);
+  const { setUser, updateUser } = UserAuth();
+  const navigate = useNavigate();
+  const { handlenewuser } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -18,15 +19,30 @@ const Registration = () => {
   const onSubmit = (data) => {
     console.log(data);
 
-   handlenewuser(data.email,data.password)
-   .then(result=>{
-    alert("suceess",result.user);
-    navigate("/")
-
-   })
-   .catch(error=>{
-    alert("error",error.message)
-   })
+    handlenewuser(data.email, data.password)
+      .then((result) => {
+        alert("suceess", result.user);
+        setUser(result.user);
+        updateUser({ displayName: data.name });
+        fetch("http://localhost:5000/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            "inside the body", data;
+            if (data.insertedId) {
+              alert("Account created");
+              navigate("/");
+            }
+          });
+      })
+      .catch((error) => {
+        alert("error", error.message);
+      });
   };
 
   return (
@@ -48,10 +64,12 @@ const Registration = () => {
                 className="input w-full"
                 placeholder="Enter your name"
               />
-              {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
             </div>
 
-            <div>
+            {/* <div>
               <label className="block text-lg font-semibold">Age</label>
               <input
                 {...register("age", { required: "Age is required" })}
@@ -60,7 +78,7 @@ const Registration = () => {
                 placeholder="Enter your age"
               />
               {errors.age && <p className="text-red-500">{errors.age.message}</p>}
-            </div>
+            </div> */}
 
             <div>
               <label className="block text-lg font-semibold">Email</label>
@@ -76,7 +94,9 @@ const Registration = () => {
                 className="input w-full"
                 placeholder="Enter your email"
               />
-              {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
             </div>
 
             <div>
@@ -93,13 +113,17 @@ const Registration = () => {
                 className="input w-full"
                 placeholder="Enter your password"
               />
-              {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
             </div>
 
             <div>
-              <label className="block text-lg font-semibold">Your  Type</label>
+              <label className="block text-lg font-semibold">Your Type</label>
               <select
-                {...register("userType", { required: "Please select a user type" })}
+                {...register("userType", {
+                  required: "Please select a user type",
+                })}
                 className="input w-full"
               >
                 <option value="">Select an option</option>
@@ -107,7 +131,9 @@ const Registration = () => {
                 <option value="company">Company Use</option>
                 <option value="group">Group</option>
               </select>
-              {errors.userType && <p className="text-red-500">{errors.userType.message}</p>}
+              {errors.userType && (
+                <p className="text-red-500">{errors.userType.message}</p>
+              )}
             </div>
 
             <button type="submit" className="btn btn-neutral w-full mt-4">

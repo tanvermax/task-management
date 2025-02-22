@@ -1,7 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import UserAuth from "../Provider/UserAuth";
 
 const Addtask = () => {
+
+  const {user}= UserAuth();
   const {
     register,
     handleSubmit,
@@ -9,14 +12,18 @@ const Addtask = () => {
     reset,
   } = useForm();
 
+
+
   const onSubmit = (data) => {
+
+    const taskData = {...data, userEmail:user.email}
     console.log("Task Data:", data);
     fetch("https://task-managment-server-jilq.onrender.com/addedtask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(taskData),
     })
       .then(res => res.json()) // ✅ Fixes the fetch issue
       .then(data => {
@@ -105,7 +112,7 @@ const Addtask = () => {
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select Status</option>
-            <option value="pending">todo</option>
+            <option value="todo">todo</option>
             <option value="in-progress">in-progress</option>
             <option value="completed">done</option>
           </select>

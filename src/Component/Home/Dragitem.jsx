@@ -5,21 +5,22 @@ import { MdAutoDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Dragitem = ({ task }) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [{ isDragging }, drag] = useDrag({
     type: "task",
     item: task,
     collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
+      isDragging: monitor.isDragging(),
     }),
-  }));
+  });
+  
 
   const handledelete = (id) => {
     console.log(id);
-    fetch(`https://task-managment-server-jilq.onrender.com/task/${id}`,{
-      method:"DELETE"
+    fetch(`https://task-managment-server-jilq.onrender.com/task/${id}`, {
+      method: "DELETE",
     })
       .then((res) => res.json())
-      .then((data) => console.log('Task deleted successfully',data));
+      .then((data) => console.log("Task deleted successfully", data));
   };
 
   return (
@@ -81,12 +82,3 @@ const Dragitem = ({ task }) => {
 };
 
 export default Dragitem;
-
-{
-  /* <div
-  ref={drag}
-  className={`p-4 my-3 rounded-md shadow-md border bg-white cursor-pointer ${
-    isDragging ? "opacity-50" : "opacity-100"
-  }`}
-></div>; */
-}
