@@ -2,14 +2,11 @@ import React from "react";
 import { useDrag } from "react-dnd";
 
 const Dragitem = ({ task }) => {
-  if (!task) {
-    console.error("Dragitem received an undefined task!");
-    return null;
-  }
+  
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "task",
-    item: { id: task.id },
+    item: task,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -19,7 +16,7 @@ const Dragitem = ({ task }) => {
     <>
       <div ref={drag}
         key={task.id}
-        className={`p-4 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-start md:items-center ${
+        className={` rounded-lg shadow-md flex flex-col md:flex-row justify-between border p-4 items-start md:items-center ${
           task.status === "completed" ? "bg-green-100" : "bg-gray-100"
         }`}
       >
@@ -41,22 +38,22 @@ const Dragitem = ({ task }) => {
             }`}
           >
             {task.priority === "red"
-              ? "🔴 High"
+              ? " High"
               : task.priority === "yellow"
-              ? "🟡 Medium"
-              : "🟢 Low"}
+              ? " Medium"
+              : " Low"}
           </span>
 
           {/* Task Status */}
           <button
-            onClick={() => toggleStatus(task.id)}
+
             className={`px-3 py-1 rounded-lg text-white text-sm font-semibold ${
               task.status === "pending"
                 ? "bg-blue-500 hover:bg-blue-600"
                 : "bg-gray-500 hover:bg-gray-600"
             }`}
           >
-            {task.status === "pending" ? "Mark as Done" : "Completed ✅"}
+            {task.status}
           </button>
         </div>
       </div>

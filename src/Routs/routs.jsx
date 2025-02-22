@@ -30,7 +30,7 @@ export const routs = createBrowserRouter([
           },
           {
             path: "/tasklist",
-            element: <TaskList></TaskList>,
+            element: <PrivetRouts><TaskList></TaskList></PrivetRouts>,
             errorElement: <h2>erro there is no page</h2>,
           },
         ],

@@ -8,13 +8,34 @@ const Addtask = () => {
     formState: { errors },
     reset,
   } = useForm();
-  
 
   const onSubmit = (data) => {
     console.log("Task Data:", data);
-    reset(); // Clear form after submission
+    fetch("http://localhost:5000/addedtask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json()) // ✅ Fixes the fetch issue
+      .then(data => {
+        if (data.insertedId) {
+          console.log(data);
+          
+          alert("Task created successfully");
+
+         // Ensure 'navigate' is imported from 'react-router-dom'
+        }
+      })
+      .catch(error => console.error("Error adding task:", error)); // Logs any errors
+    
+
+    // reset();
+
+    // Clear form after submission
   };
-  
+
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg p-6 rounded-xl">
       <h2 className="text-2xl font-semibold text-center mb-4">Add New Task</h2>
