@@ -1,44 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 
-const Addtask = () => {
+const Edittask = () => {
+  // const loadData = useLoaderData();
+  // console.log(loadData);
+  const { id } = useParams();
+  console.log("Editing task ID:", id);
+  const [task, setTask] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/edittask/${id}`) // Adjust URL based on your backend
+      .then((res) => res.json())
+      .then((data) => setTask(data))
+      .catch((err) => console.error("Error fetching task:", err));
+  }, [id]);
+  console.log(task);
+
   const {
     register,
     handleSubmit,
+
     formState: { errors },
-    reset,
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Task Data:", data);
-    fetch("http://localhost:5000/addedtask", {
-      method: "POST",
+    fetch(`http://localhost:5000/updatetask/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then(res => res.json()) // ✅ Fixes the fetch issue
-      .then(data => {
-        if (data.insertedId) {
-          console.log(data);
-          
-          alert("Task created successfully");
-
-         // Ensure 'navigate' is imported from 'react-router-dom'
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.modifiedCount > 0) {
+          alert("Task updated successfully!");
+          navigate("/"); // Redirect to task list after update
         }
       })
-      .catch(error => console.error("Error adding task:", error)); // Logs any errors
-    
-
-    // reset();
-
-    // Clear form after submission
+      .catch((err) => console.error("Error updating task:", err));
   };
 
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg p-6 rounded-xl">
-      <h2 className="text-2xl font-semibold text-center mb-4">Add New Task</h2>
+      <h2 className="text-2xl font-semibold text-center mb-4">
+        Update your Task
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Task Title */}
         <div>
@@ -48,6 +57,7 @@ const Addtask = () => {
             {...register("title", { required: "Title is required" })}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter task title"
+            defaultValue={task.title}
           />
           {errors.title && (
             <p className="text-red-500">{errors.title.message}</p>
@@ -63,6 +73,7 @@ const Addtask = () => {
             })}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter task details"
+            defaultValue={task.description}
             rows="3"
           ></textarea>
           {errors.description && (
@@ -75,7 +86,8 @@ const Addtask = () => {
           <label className="block font-medium">Due Date</label>
           <input
             type="date"
-            {...register("date", { required: "Date is required" })}
+            defaultValue={task.date}
+            {...register("date", { required: "date is required" })}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           />
           {errors.date && <p className="text-red-500">{errors.date.message}</p>}
@@ -85,6 +97,7 @@ const Addtask = () => {
         <div>
           <label className="block font-medium">Priority</label>
           <select
+            defaultChecked={task.priority}
             {...register("priority", { required: "Priority is required" })}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           >
@@ -97,22 +110,23 @@ const Addtask = () => {
             <p className="text-red-500">{errors.priority.message}</p>
           )}
         </div>
+
         <div>
           <label className="block font-medium">Status</label>
           <select
+            defaultChecked={task.status}
             {...register("status", { required: "Status is required" })}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select Status</option>
-            <option value="pending">todo</option>
+            <option value="todo">todo</option>
             <option value="in-progress">in-progress</option>
-            <option value="completed">done</option>
+            <option value="done">done</option>
           </select>
           {errors.status && (
             <p className="text-red-500">{errors.status.message}</p>
           )}
         </div>
-
 
         {/* Submit Button */}
         <button
@@ -126,4 +140,4 @@ const Addtask = () => {
   );
 };
 
-export default Addtask;
+export default Edittask;

@@ -1,5 +1,7 @@
 import React from "react";
 import { useDrag } from "react-dnd";
+import { CiEdit } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const Dragitem = ({ task }) => {
   
@@ -21,9 +23,9 @@ const Dragitem = ({ task }) => {
         }`}
       >
         <div>
-          <h3 className="text-xl font-semibold">{task.title}</h3>
-          <p className="text-gray-600">{task.description}</p>
-          <p className="text-sm text-gray-500">📅 {task.date}</p>
+          <h3 className="lg:text-xl text-xs font-semibold">{task.title}</h3>
+          <p className="text-gray-600 lg:text-base text-[8px]">{task.description}</p>
+          <p className="lg:text-sm text-[8px] text-gray-500">📅 {task.date}</p>
         </div>
 
         <div className="flex items-center gap-4 mt-2 md:mt-0">
@@ -47,14 +49,17 @@ const Dragitem = ({ task }) => {
           {/* Task Status */}
           <button
 
-            className={`px-3 py-1 rounded-lg text-white text-sm font-semibold ${
-              task.status === "pending"
+            className={`lg:px-3 py-1 px-1 rounded-lg text-white lg:text-sm text-[8px] font-semibold ${
+              task.status === "todo"
                 ? "bg-blue-500 hover:bg-blue-600"
                 : "bg-gray-500 hover:bg-gray-600"
             }`}
           >
             {task.status}
+
           </button>
+          <Link to={`/edittask/${task._id}`}><CiEdit /></Link>
+          
         </div>
       </div>
     </>

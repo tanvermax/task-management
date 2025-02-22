@@ -7,6 +7,7 @@ import Log from "../Component/Auth/Log";
 import Registration from "../Component/Auth/Registration";
 import Inbox from "../Component/Home/Inbox";
 import PrivetRouts from "./PrivetRouts";
+import Edittask from "../Component/Edittask/Edittask";
 
 export const routs = createBrowserRouter([
   {
@@ -25,12 +26,34 @@ export const routs = createBrowserRouter([
           },
           {
             path: "/addtask",
-            element: <PrivetRouts><Addtask></Addtask></PrivetRouts>,
+            element: (
+              <PrivetRouts>
+                <Addtask></Addtask>
+              </PrivetRouts>
+            ),
+            errorElement: <h2>erro there is no page</h2>,
+          },
+          {
+            path: "/edittask/:id",
+            element: (
+              <PrivetRouts>
+                <Edittask></Edittask>
+              </PrivetRouts>
+            ),
+            loader: ({ params }) => {
+              console.log("task id :=",params.id);
+
+              fetch(`http://localhost:5000/edittask/${params.id}`);
+            },
             errorElement: <h2>erro there is no page</h2>,
           },
           {
             path: "/tasklist",
-            element: <PrivetRouts><TaskList></TaskList></PrivetRouts>,
+            element: (
+              <PrivetRouts>
+                <TaskList></TaskList>
+              </PrivetRouts>
+            ),
             errorElement: <h2>erro there is no page</h2>,
           },
         ],

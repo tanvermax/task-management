@@ -37,12 +37,12 @@ const Authprovider = ({ children }) => {
         setUser(currentuser);
         setloading(false);
       } else {
-        setloading(true);
+        setloading(false);
         setUser(null);
       }
     });
     return () => {
-      return unsubscriber;
+       unsubscriber();
     };
   });
 
