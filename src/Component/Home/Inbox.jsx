@@ -8,7 +8,7 @@ const Inbox = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/addedtask")
+    fetch("https://task-managment-server-jilq.onrender.com/addedtask")
       .then((res) => res.json())
       .then((data) => {
         setTasks(data);
@@ -53,7 +53,7 @@ const Inbox = () => {
     );
 
     try {
-      const res = await fetch(`http://localhost:5000/addedtask/${id}`, {
+      const res = await fetch(`https://task-managment-server-jilq.onrender.com/addedtask/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -29,7 +29,7 @@ const Edittask = () => {
   const onSubmit = (data) => {
     console.log(data);
     
-    fetch(`http://localhost:5000/updatetask/${id}`, {
+    fetch(`https://task-managment-server-jilq.onrender.com/updatetask/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

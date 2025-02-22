@@ -11,7 +11,7 @@ const Addtask = () => {
 
   const onSubmit = (data) => {
     console.log("Task Data:", data);
-    fetch("http://localhost:5000/addedtask", {
+    fetch("https://task-managment-server-jilq.onrender.com/addedtask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const Addtask = () => {
           <select
             {...register("priority", { required: "Priority is required" })}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
-          >
+          >onSubmit
             <option value="">Select Priority</option>
             <option value="red">🔴 Red Flag (High Priority)</option>
             <option value="yellow">🟡 Yellow Flag (Medium Priority)</option>
@@ -97,6 +97,7 @@ const Addtask = () => {
             <p className="text-red-500">{errors.priority.message}</p>
           )}
         </div>
+
         <div>
           <label className="block font-medium">Status</label>
           <select
