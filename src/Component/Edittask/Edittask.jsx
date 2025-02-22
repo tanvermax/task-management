@@ -11,7 +11,7 @@ const Edittask = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/edittask/${id}`) // Adjust URL based on your backend
+    fetch(`https://task-managment-server-jilq.onrender.com/${id}`) // Adjust URL based on your backend
       .then((res) => res.json())
       .then((data) => setTask(data))
       .catch((err) => console.error("Error fetching task:", err));
@@ -23,9 +23,12 @@ const Edittask = () => {
     handleSubmit,
 
     formState: { errors },
+    reset
   } = useForm();
 
   const onSubmit = (data) => {
+    console.log(data);
+    
     fetch(`http://localhost:5000/updatetask/${id}`, {
       method: "PUT",
       headers: {
@@ -54,7 +57,7 @@ const Edittask = () => {
           <label className="block font-medium">Task Title</label>
           <input
             type="text"
-            {...register("title", { required: "Title is required" })}
+            {...register("title")}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter task title"
             defaultValue={task.title}
@@ -68,9 +71,7 @@ const Edittask = () => {
         <div>
           <label className="block font-medium">Task Description</label>
           <textarea
-            {...register("description", {
-              required: "Description is required",
-            })}
+            {...register("description")}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter task details"
             defaultValue={task.description}
@@ -87,7 +88,7 @@ const Edittask = () => {
           <input
             type="date"
             defaultValue={task.date}
-            {...register("date", { required: "date is required" })}
+            {...register("date")}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           />
           {errors.date && <p className="text-red-500">{errors.date.message}</p>}
@@ -97,8 +98,8 @@ const Edittask = () => {
         <div>
           <label className="block font-medium">Priority</label>
           <select
-            defaultChecked={task.priority}
-            {...register("priority", { required: "Priority is required" })}
+            defaultValue={task.priority}
+            {...register("priority",)}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select Priority</option>
@@ -114,8 +115,8 @@ const Edittask = () => {
         <div>
           <label className="block font-medium">Status</label>
           <select
-            defaultChecked={task.status}
-            {...register("status", { required: "Status is required" })}
+            defaultValue={task.status}
+            {...register("status")}
             className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select Status</option>

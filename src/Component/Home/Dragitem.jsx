@@ -1,11 +1,10 @@
 import React from "react";
 import { useDrag } from "react-dnd";
 import { CiEdit } from "react-icons/ci";
+import { MdAutoDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Dragitem = ({ task }) => {
-  
-
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "task",
     item: task,
@@ -16,19 +15,22 @@ const Dragitem = ({ task }) => {
 
   return (
     <>
-      <div ref={drag}
+      <div
+        ref={drag}
         key={task.id}
-        className={` rounded-lg shadow-md flex flex-col md:flex-row justify-between border p-4 items-start md:items-center ${
+        className={` rounded-lg shadow-md  justify-between border p-4 items-start md:items-center ${
           task.status === "completed" ? "bg-green-100" : "bg-gray-100"
         }`}
       >
         <div>
           <h3 className="lg:text-xl text-xs font-semibold">{task.title}</h3>
-          <p className="text-gray-600 lg:text-base text-[8px]">{task.description}</p>
+          <p className="text-gray-600 lg:text-base text-[8px]">
+            {task.description}
+          </p>
           <p className="lg:text-sm text-[8px] text-gray-500">📅 {task.date}</p>
         </div>
 
-        <div className="flex items-center gap-4 mt-2 md:mt-0">
+        <div className="flex items-center gap-1 mt-2 md:mt-0">
           {/* Priority Flag */}
           <span
             className={`px-3 py-1 rounded-full text-white text-xs font-semibold ${
@@ -48,7 +50,6 @@ const Dragitem = ({ task }) => {
 
           {/* Task Status */}
           <button
-
             className={`lg:px-3 py-1 px-1 rounded-lg text-white lg:text-sm text-[8px] font-semibold ${
               task.status === "todo"
                 ? "bg-blue-500 hover:bg-blue-600"
@@ -56,10 +57,15 @@ const Dragitem = ({ task }) => {
             }`}
           >
             {task.status}
-
           </button>
-          <Link to={`/edittask/${task._id}`}><CiEdit /></Link>
-          
+         
+            <Link className="btn" to={`/edittask/${task._id}`}>
+              <CiEdit />
+            </Link>
+            <button className="btn">
+              <MdAutoDelete />
+            </button>
+      
         </div>
       </div>
     </>
@@ -68,9 +74,11 @@ const Dragitem = ({ task }) => {
 
 export default Dragitem;
 
-{/* <div
+{
+  /* <div
   ref={drag}
   className={`p-4 my-3 rounded-md shadow-md border bg-white cursor-pointer ${
     isDragging ? "opacity-50" : "opacity-100"
   }`}
-></div>; */}
+></div>; */
+}
