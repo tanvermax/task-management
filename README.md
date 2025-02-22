@@ -22,3 +22,5 @@ Built with Vite.js and React.
 Utilizes a drag-and-drop library (e.g., react-beautiful-dnd) for task management.
 Modern, clean, and responsive design with a maximum of four colors.
 Responsiveness: Smooth operation on both desktop and mobile devices, ensuring a mobile-friendly drag-and-drop experience.
+
+ [live link :](https://task-management-b4adc.web.app/)
