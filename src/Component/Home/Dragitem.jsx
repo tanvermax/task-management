@@ -28,11 +28,11 @@ const Dragitem = ({ task }) => {
       <div
         ref={drag}
         key={task.id}
-        className={` rounded-lg shadow-md  justify-between border lg:p-4  p-1 items-start md:items-center ${
+        className={` rounded-lg shadow-md  justify-between border lg:p-3  p-1 items-start md:items-center ${
           task.status === "completed" ? "bg-green-100" : "bg-gray-100"
         }`}
       >
-        <div>
+        <div className="">
           <h3 className="lg:text-xl text-[8px] font-semibold">{task.title}</h3>
           <p className="text-gray-600 lg:text-base text-[8px]">
             {task.description}

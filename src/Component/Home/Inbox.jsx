@@ -5,6 +5,7 @@ import { useDrop } from "react-dnd";
 import "../../App.css";
 import UserAuth from "../../Provider/UserAuth";
 import { useSocket } from "./SocketProvider";
+import Queots from "./Queats/Queots";
 
 const Inbox = () => {
   const { user } = UserAuth();
@@ -90,27 +91,30 @@ const Inbox = () => {
 
   return (
     <>
-      <h2 className="lg:text-3xl text-[8px] font-semibold mb-4">📥 Inbox </h2>
+    <div>
+      <Queots></Queots>
+    </div>
+      <h2 className="lg:text-3xl text-[8px] font-semibold mb-4"> Hello! create, make  and finish it</h2>
       <div className="grid grid-cols-3 gap-1">
         <div ref={dropTodo} className="rounded-xl lg:text-base  text-[8px] border overflow-scroll mx-auto">
-          <h1>To-Do</h1>
-          <div className="grid grid-cols-1 lg:gap-5">
+          <h1 className="p-3">To-Do</h1>
+          <div className="grid grid-cols-1  lg:gap-8 p-2">
             {tasks
               .filter((task) => task.status === "todo" && task.userEmail === user.email)
               .map((task) => <Dragitem key={task._id} task={task} />)}
           </div>
         </div>
 
-        <div className="Board" ref={drop}>
-          <h1 className="lg:text-base text-[8px]">In Progress</h1>
+        <div className="Board p-3" ref={drop}>
+          <h1 className="lg:text-base text-[8px] p-3">In Progress</h1>
           {tasks
             .filter((task) => task.status === "in-progress" && task.userEmail === user.email)
             .map((task) => <Dragitem key={task._id} task={task} />)}
         </div>
 
         <div className="Board" ref={dropDone}>
-          <h1 className="lg:text-base text-[8px]">Completed</h1>
-          <div className={`grid gap-3 ${isOverDone ? "bg-green-200" : ""}`}>
+          <h1 className="lg:text-base text-[8px] p-3">Completed</h1>
+          <div className={`grid p-3 gap-3 ${isOverDone ? "bg-green-200" : ""}`}>
             {tasks
               .filter((task) => task.status === "done" && task.userEmail === user.email)
               .map((task) => <Dragitem key={task._id} task={task} />)}
