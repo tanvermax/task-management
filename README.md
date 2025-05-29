@@ -23,4 +23,79 @@ Utilizes a drag-and-drop library (e.g., react-beautiful-dnd) for task management
 Modern, clean, and responsive design with a maximum of four colors.
 Responsiveness: Smooth operation on both desktop and mobile devices, ensuring a mobile-friendly drag-and-drop experience.
 
+# 🧠 Mini Productivity Dashboard
+
+This is a full-stack web application built as part of the hiring process for the **Frontend Developer** position at **Airepro Solution Pvt Ltd**.
+
+The application allows users to:
+- Register and log in securely (JWT-based authentication)
+- Add, edit, delete, and mark daily tasks as complete
+- Set and manage weekly/monthly goals
+- View motivational quotes from a public API
+- (Bonus) Reorder tasks using drag-and-drop
+- (Bonus) Toggle between dark and light mode
+
+---
+
+## 🔗 Live Demo
+
+Frontend: [Live on Vercel/Netlify](#)  
+Backend API: [Live on Render](#)
+
+---
+
+## 📹 Video Walkthrough
+
+Watch the explanation of how the project works here: [Watch on YouTube](#)
+
+---
+
+## 📁 Tech Stack
+
+### Frontend
+- React.js
+- React Router
+- Context API / Redux (if used)
+- Tailwind CSS / CSS Modules / Styled Components
+- JWT-based authentication
+- Axios for API requests
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JSON Web Tokens (JWT)
+- bcrypt for password hashing
+- CORS, dotenv, etc.
+
+---
+
+## 🚀 Features
+
+### ✅ Authentication
+- User Registration & Login
+- JWT-based protected routes
+
+### 📝 Task Management
+- Create, edit, delete, and complete daily tasks
+- Optional: Drag-and-drop for reordering tasks
+
+
+### 💬 Motivational Quotes
+- Fetched from public APIs such as [zenquotes.io](https://zenquotes.io/) or [quotable.io](https://quotable.io/)
+
+### 🌙 UI Enhancements
+- Responsive design
+- Dark/Light mode toggle (optional bonus)
+
+---
+
+## 🛠️ Setup Instructions
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/mini-productivity-dashboard.git
+cd mini-productivity-dashboard
+
+
  [live link :](https://task-management-b4adc.web.app/)
