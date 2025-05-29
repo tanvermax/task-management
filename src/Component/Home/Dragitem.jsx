@@ -43,7 +43,7 @@ const Dragitem = ({ task }) => {
         <div className="lg:flex items-center gap-1 mt-2 md:mt-0">
           {/* Priority Flag */}
           <span
-            className={`lg:px-3 py-1 px-1 rounded-full text-white lg:text-xs text-[8px] font-semibold ${
+            className={`lg:p-2 py-1 px-1 rounded-md text-white lg:text-xs text-[8px] font-semibold ${
               task.priority === "red"
                 ? "bg-red-500"
                 : task.priority === "yellow"
@@ -60,10 +60,10 @@ const Dragitem = ({ task }) => {
 
           {/* Task Status */}
           <button
-            className={`lg:px-3 lg:py-1 px-1 rounded-lg text-white lg:text-sm text-[8px] font-semibold ${
+            className={` lg:p-2 px-1 rounded-md text-white lg:text-sm text-[8px] font-semibold ${
               task.status === "todo"
                 ? "bg-blue-500 hover:bg-blue-600"
-                : "bg-gray-500 hover:bg-gray-600"
+                : "bg-green-600 hover:bg-gray-600"
             }`}
           >
             {task.status}

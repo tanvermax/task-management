@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Edittask = () => {
   // const loadData = useLoaderData();
@@ -11,12 +12,12 @@ const Edittask = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://task-managment-server-jilq.onrender.com/edittask/${id}`) // Adjust URL based on your backend
+    fetch(`https://task-managment-server-jilq.onrender.com/updatetask/${id}`) // Adjust URL based on your backend
       .then((res) => res.json())
       .then((data) => setTask(data))
       .catch((err) => console.error("Error fetching task:", err));
   }, [id]);
-  // console.log(task);
+  console.log(task);
 
   const {
     register,
@@ -27,8 +28,8 @@ const Edittask = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    // console.log(data);
-    
+    console.log(data);
+  
     fetch(`https://task-managment-server-jilq.onrender.com/updatetask/${id}`, {
       method: "PUT",
       headers: {
@@ -39,7 +40,17 @@ const Edittask = () => {
       .then((res) => res.json())
       .then((response) => {
         if (response.modifiedCount > 0) {
-          alert("Task updated successfully!");
+          // alert("Task updated successfully!");
+           toast('Task updated successfully!', {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: false,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                      });
           navigate("/"); // Redirect to task list after update
         }
       })
@@ -47,7 +58,7 @@ const Edittask = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg p-6 rounded-xl">
+    <div className="max-w-md mx-auto  shadow-lg p-6 rounded-xl">
       <h2 className="text-2xl font-semibold text-center mb-4">
         Update your Task
       </h2>
@@ -100,7 +111,7 @@ const Edittask = () => {
           <select
             defaultValue={task.priority}
             {...register("priority",)}
-            className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border bg-gray-800 rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select Priority</option>
             <option value="red">🔴 Red Flag (High Priority)</option>
@@ -117,7 +128,7 @@ const Edittask = () => {
           <select
             defaultValue={task.status}
             {...register("status")}
-            className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border bg-gray-800 rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select Status</option>
             <option value="todo">todo</option>
@@ -132,7 +143,7 @@ const Edittask = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white  p-2 rounded-lg hover:bg-blue-700 transition"
         >
           Submit Task
         </button>

@@ -9,7 +9,7 @@ const Navber = () => {
   const [loguser, setloguser]= useState([]);
 
   useEffect(()=>{
-    fetch("http://localhost:5000/user")
+    fetch("https://task-managment-server-jilq.onrender.com/user")
     .then(res=>res.json())
     .then(data=>setloguser(data)
     )

@@ -46,7 +46,7 @@ const Authprovider = ({ children }) => {
         if (currentuser?.email) {
           const user = {email: currentuser.email};
 
-          axios.post('http://localhost:5000/jwt',user,{withCredentials : true})
+          axios.post('https://task-managment-server-jilq.onrender.com/jwt',user,{withCredentials : true})
           .then(res=>console.log(res.data)
           )
         }

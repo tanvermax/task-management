@@ -46,7 +46,7 @@ Backend API: [Live on Render](https://task-managment-server-jilq.onrender.com)
 
 ## 📹 Video Walkthrough
 
-Watch the explanation of how the project works here: [Watch on YouTube](#)
+Watch the explanation of how the project works here: [Watch on YouTube](https://youtu.be/tlzmNtQySj8)
 
 ---
 

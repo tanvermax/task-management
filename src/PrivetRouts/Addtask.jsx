@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import UserAuth from "../Provider/UserAuth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Addtask = () => {
 
@@ -11,6 +13,9 @@ const Addtask = () => {
     formState: { errors },
     reset,
   } = useForm();
+
+
+  const navigate = useNavigate();
 
 
 
@@ -29,8 +34,19 @@ const Addtask = () => {
       .then(data => {
         if (data.insertedId) {
           console.log(data);
+          navigate('/')
           
-          alert("Task created successfully");
+          // alert("Task created successfully");
+          toast('Task created successfully!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
 
          // Ensure 'navigate' is imported from 'react-router-dom'
         }
@@ -93,7 +109,7 @@ const Addtask = () => {
           <label className="block font-medium">Priority</label>
           <select
             {...register("priority", { required: "Priority is required" })}
-            className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 border rounded-lg outline-none bg-gray-800 focus:ring-2 focus:ring-blue-400"
           >onSubmit
             <option value="">Select Priority</option>
             <option value="red">🔴 Red Flag (High Priority)</option>
@@ -109,7 +125,7 @@ const Addtask = () => {
           <label className="block font-medium">Status</label>
           <select
             {...register("status", { required: "Status is required" })}
-            className="w-full p-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-2 bg-gray-800 border rounded-lg outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select Status</option>
             <option value="todo">todo</option>
