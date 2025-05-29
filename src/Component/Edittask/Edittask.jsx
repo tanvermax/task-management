@@ -11,7 +11,7 @@ const Edittask = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://task-managment-server-jilq.onrender.com/edittask/${id}`) // Adjust URL based on your backend
+    fetch(`http://localhost:5000/edittask/${id}`) // Adjust URL based on your backend
       .then((res) => res.json())
       .then((data) => setTask(data))
       .catch((err) => console.error("Error fetching task:", err));
@@ -29,7 +29,7 @@ const Edittask = () => {
   const onSubmit = (data) => {
     console.log(data);
     
-    fetch(`https://task-managment-server-jilq.onrender.com/updatetask/${id}`, {
+    fetch(`http://localhost:5000/updatetask/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

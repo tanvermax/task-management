@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 const SocketContext = createContext();
 
-const socket = io("https://task-managment-server-jilq.onrender.com/"); // Connect to backend
+const socket = io("http://localhost:5000/"); // Connect to backend
 
 export const SocketProvider = ({ children }) => {
   useEffect(() => {

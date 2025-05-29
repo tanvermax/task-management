@@ -53,10 +53,13 @@ const Inbox = () => {
     }),
   }));
 
+  // http://localhost:5000
+
+
   const fetchTasks = async () => {
     try {
       console.log("📥 Fetching tasks...");
-      const res = await fetch("https://task-managment-server-jilq.onrender.com/addedtask");
+      const res = await fetch("http://localhost:5000/addedtask");
       const data = await res.json();
       console.log("✅ Fetched tasks:", data);
       setTasks(data);
@@ -68,7 +71,7 @@ const Inbox = () => {
   const moveTo = async (status, id) => {
     console.log(`🔄 Moving task ${id} to ${status}`);
     try {
-      const res = await fetch(`https://task-managment-server-jilq.onrender.com/addedtask/${id}`, {
+      const res = await fetch(`http://localhost:5000/addedtask/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),

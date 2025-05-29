@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import resiteanim from "./../../assets/Animation - 1740010453167.json";
 import UserAuth from "../../Provider/UserAuth";
 import { AuthContext } from "../../Provider/Authprovider";
+import axios from "axios";
 
 const Registration = () => {
   const { setUser, updateUser } = UserAuth();
@@ -16,33 +17,31 @@ const Registration = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
 
-    handlenewuser(data.email, data.password)
-      .then((result) => {
-        alert("suceess", result.user);
-        setUser(result.user);
-        updateUser({ displayName: data.name });
-        fetch("http://localhost:5000/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            "inside the body", data;
-            if (data.insertedId) {
-              alert("Account created");
-              navigate("/");
-            }
-          });
-      })
-      .catch((error) => {
-        alert("error", error.message);
+    try {
+      // Handle user registration with authentication
+      const result = await handlenewuser(data.email, data.password);
+      alert("Success", result.user);
+      setUser(result.user);
+      await updateUser({ displayName: data.name });
+
+      // Send form data to the server using axios
+      const response = await axios.post("http://localhost:5000/user",{ withCredentials: true }, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+
+      console.log("Inside the body", response.data);
+      if (response.data.insertedId) {
+        alert("Account created");
+        navigate("/");
+      }
+    } catch (error) {
+      alert("Error", error.message);
+    }
   };
 
   return (

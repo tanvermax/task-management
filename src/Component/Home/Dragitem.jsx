@@ -16,7 +16,7 @@ const Dragitem = ({ task }) => {
 
   const handledelete = (id) => {
     console.log(id);
-    fetch(`https://task-managment-server-jilq.onrender.com/task/${id}`, {
+    fetch(`http://localhost:5000/task/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

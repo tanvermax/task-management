@@ -18,7 +18,7 @@ const Addtask = () => {
 
     const taskData = {...data, userEmail:user.email}
     console.log("Task Data:", data);
-    fetch("https://task-managment-server-jilq.onrender.com/addedtask", {
+    fetch("http://localhost:5000/addedtask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
