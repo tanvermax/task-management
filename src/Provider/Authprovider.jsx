@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { app } from "../FIrebase/firebase.init";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -42,6 +43,13 @@ const Authprovider = ({ children }) => {
     const unsubscriber = onAuthStateChanged(auth, (currentuser) => {
       if (currentuser) {
         setUser(currentuser);
+        if (currentuser?.email) {
+          const user = {email: currentuser.email};
+
+          axios.post('http://localhost:5000/jwt',user,{withCredentials : true})
+          .then(res=>console.log(res.data)
+          )
+        }
         setloading(false);
       } else {
         setloading(false);

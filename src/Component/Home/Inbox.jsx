@@ -5,12 +5,13 @@ import { useDrop } from "react-dnd";
 import "../../App.css";
 import UserAuth from "../../Provider/UserAuth";
 import { useSocket } from "./SocketProvider";
-import Queots from "./Queats/Queots";
+import Queots from "./Queats.jsx/Queots";
 
 const Inbox = () => {
   const { user } = UserAuth();
   const socket = useSocket();
   const [tasks, setTasks] = useState([]);
+
 
   useEffect(() => {
     if (user && user.email) {
@@ -53,25 +54,30 @@ const Inbox = () => {
     }),
   }));
 
-  // http://localhost:5000
+  // https://task-managment-server-jilq.onrender.com
 
 
   const fetchTasks = async () => {
     try {
       console.log("📥 Fetching tasks...");
-      const res = await fetch("http://localhost:5000/addedtask");
+      const res = await fetch("https://task-managment-server-jilq.onrender.com/addedtask");
       const data = await res.json();
       console.log("✅ Fetched tasks:", data);
       setTasks(data);
+      console.log(data);
+
     } catch (error) {
       console.error("❌ Error fetching tasks:", error);
     }
   };
 
+  // console.log(data);
+
+
   const moveTo = async (status, id) => {
     console.log(`🔄 Moving task ${id} to ${status}`);
     try {
-      const res = await fetch(`http://localhost:5000/addedtask/${id}`, {
+      const res = await fetch(`https://task-managment-server-jilq.onrender.com/addedtask/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
@@ -94,9 +100,9 @@ const Inbox = () => {
 
   return (
     <>
-    <div>
-      <Queots></Queots>
-    </div>
+      <div>
+        <Queots></Queots>
+      </div>
       <h2 className="lg:text-3xl text-[8px] font-semibold mb-4"> Hello! create, make  and finish it</h2>
       <div className="grid grid-cols-3 gap-1">
         <div ref={dropTodo} className="rounded-xl lg:text-base  text-[8px] border overflow-scroll mx-auto">
@@ -110,9 +116,10 @@ const Inbox = () => {
 
         <div className="Board p-3" ref={drop}>
           <h1 className="lg:text-base text-[8px] p-3">In Progress</h1>
-          {tasks
-            .filter((task) => task.status === "in-progress" && task.userEmail === user.email)
-            .map((task) => <Dragitem key={task._id} task={task} />)}
+
+          {tasks && Array.isArray(tasks) && tasks
+            .filter((task) => task && task.status === "in-progress" && task.userEmail === user?.email)
+            .map((task) => task && <Dragitem key={task._id} task={task} />)}
         </div>
 
         <div className="Board" ref={dropDone}>

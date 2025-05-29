@@ -18,7 +18,7 @@ const Addtask = () => {
 
     const taskData = {...data, userEmail:user.email}
     console.log("Task Data:", data);
-    fetch("http://localhost:5000/addedtask", {
+    fetch("https://task-managment-server-jilq.onrender.com/addedtask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const Addtask = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg p-6 rounded-xl">
+    <div className="max-w-md mx-auto shadow-lg p-6 rounded-xl">
       <h2 className="text-2xl font-semibold text-center mb-4">Add New Task</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Task Title */}

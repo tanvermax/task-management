@@ -11,12 +11,12 @@ const Edittask = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/edittask/${id}`) // Adjust URL based on your backend
+    fetch(`https://task-managment-server-jilq.onrender.com/edittask/${id}`) // Adjust URL based on your backend
       .then((res) => res.json())
       .then((data) => setTask(data))
       .catch((err) => console.error("Error fetching task:", err));
   }, [id]);
-  console.log(task);
+  // console.log(task);
 
   const {
     register,
@@ -27,9 +27,9 @@ const Edittask = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     
-    fetch(`http://localhost:5000/updatetask/${id}`, {
+    fetch(`https://task-managment-server-jilq.onrender.com/updatetask/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

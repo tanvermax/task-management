@@ -4,7 +4,7 @@ import UserAuth from "../../Provider/UserAuth";
 
 const Navber = () => {
   const { user, handlelogout } = UserAuth();
-  console.log(user);
+  // console.log(user);
 
   const [loguser, setloguser]= useState([]);
 
@@ -20,7 +20,7 @@ const Navber = () => {
  const loggedInUser = loguser.filter((userData) => userData.email === user?.email);
   
 
- console.log(loggedInUser);
+//  console.log(loggedInUser);
  
 
   return (

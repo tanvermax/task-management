@@ -16,7 +16,7 @@ const Dragitem = ({ task }) => {
 
   const handledelete = (id) => {
     console.log(id);
-    fetch(`http://localhost:5000/task/${id}`, {
+    fetch(`https://task-managment-server-jilq.onrender.com/task/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -28,8 +28,8 @@ const Dragitem = ({ task }) => {
       <div
         ref={drag}
         key={task.id}
-        className={` rounded-lg shadow-md  justify-between border lg:p-3  p-1 items-start md:items-center ${
-          task.status === "completed" ? "bg-green-100" : "bg-gray-100"
+        className={` rounded-lg shadow-md  justify-between border lg:p-5  p-1 items-start md:items-center ${
+          task.status === "done" ? "bg-amber-900" : "bg-gray-100"
         }`}
       >
         <div className="">
