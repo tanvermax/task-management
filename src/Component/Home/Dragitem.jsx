@@ -28,7 +28,7 @@ const Dragitem = ({ task }) => {
       <div
         ref={drag}
         key={task.id}
-        className={` rounded-lg shadow-md  justify-between border lg:p-5  p-1 items-start md:items-center ${
+        className={` rounded-lg m-1 shadow-md  justify-between border lg:p-5  p-1 items-start md:items-center ${
           task.status === "done" ? "bg-amber-900" : "bg-gray-100"
         }`}
       >
@@ -40,7 +40,7 @@ const Dragitem = ({ task }) => {
           <p className="lg:text-sm text-[8px] text-gray-500">📅 {task.date}</p>
         </div>
 
-        <div className="lg:flex items-center gap-1 mt-2 md:mt-0">
+        <div className="lg:flex items-center gap-2  md:mt-0">
           {/* Priority Flag */}
           <span
             className={`lg:p-2 py-1 px-1 rounded-md text-white lg:text-xs text-[8px] font-semibold ${

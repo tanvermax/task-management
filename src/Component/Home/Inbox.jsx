@@ -107,19 +107,21 @@ const Inbox = () => {
       <div className="grid grid-cols-3 gap-1">
         <div ref={dropTodo} className="rounded-xl lg:text-base  text-[8px] border overflow-scroll mx-auto">
           <h1 className="p-3">To-Do</h1>
-          <div className="grid grid-cols-1  lg:gap-8 p-2">
+          <div className="grid grid-cols-1  p-1">
             {tasks
               .filter((task) => task.status === "todo" && task.userEmail === user.email)
               .map((task) => <Dragitem key={task._id} task={task} />)}
           </div>
         </div>
 
-        <div className="Board p-3" ref={drop}>
+        <div className="Board p-2  " ref={drop}>
           <h1 className="lg:text-base text-[8px] p-3">In Progress</h1>
 
+          <div >
           {tasks && Array.isArray(tasks) && tasks
             .filter((task) => task && task.status === "in-progress" && task.userEmail === user?.email)
             .map((task) => task && <Dragitem key={task._id} task={task} />)}
+          </div>
         </div>
 
         <div className="Board" ref={dropDone}>
