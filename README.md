@@ -39,8 +39,8 @@ The application allows users to:
 
 ## 🔗 Live Demo
 
-Frontend: [Live on Vercel/Netlify](#)  
-Backend API: [Live on Render](#)
+Frontend: [Live on Vercel/Netlify](https://task-management-b4adc.web.app/)  
+Backend API: [Live on Render](https://task-managment-server-jilq.onrender.com)
 
 ---
 
@@ -84,18 +84,12 @@ Watch the explanation of how the project works here: [Watch on YouTube](#)
 ### 💬 Motivational Quotes
 - Fetched from public APIs such as [zenquotes.io](https://zenquotes.io/) or [quotable.io](https://quotable.io/)
 
-### 🌙 UI Enhancements
+<!-- ### 🌙 UI Enhancements
 - Responsive design
-- Dark/Light mode toggle (optional bonus)
+- Dark/Light mode toggle (optional bonus) -->
 
 ---
 
-## 🛠️ Setup Instructions
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/yourusername/mini-productivity-dashboard.git
-cd mini-productivity-dashboard
 
 
  [live link :](https://task-management-b4adc.web.app/)
